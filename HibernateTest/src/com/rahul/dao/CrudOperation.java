@@ -18,7 +18,6 @@ public class CrudOperation {
 			SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();	
 			session = sessionFactory.openSession();
 			Transaction tx =session.beginTransaction();
-			//session.save(new Student(1,"rahul",new Address("Balewadi","Pune",411045)));
 			session.save(new Student(1,"rahul",new Address("Balewadi","Pune",411045)));
 			tx.commit();
 		}catch(HibernateException e){
