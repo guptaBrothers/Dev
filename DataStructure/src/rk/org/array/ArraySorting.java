@@ -170,7 +170,7 @@ public class ArraySorting {
 		dispayArray(arr);
 		for(int i=arr.length-1;i>0;i--){
 			swap(arr,0,i);
-			maxHeapify(arr,0);
+			maxHeapify(arr,i+1,0);               // size is always +1 heap size for sorting keeps on reducing
 		}
 		
 	}
@@ -181,24 +181,24 @@ public class ArraySorting {
 	private void buildMaxHeap(int[] arr) {
 		
 		for(int i =(arr.length-1)/2; i>=0;i--){
-			maxHeapify(arr, i);
+			maxHeapify(arr,arr.length, i);
 		}
 		
 	}
 	
 	
-	private void maxHeapify(int[] arr, int i) {
+	private void maxHeapify(int[] arr,int length int i) {
 		int l =2*i;
 		int r = 2*i+1;
 		int largest;
-		if(l<arr.length && arr[l]>arr[i]){
+		if(l<length && arr[l]>arr[i]){
 			largest =l;
 		}
 		else{
 			largest =i;
 		}
 			
-		if(r<arr.length && arr[r]>arr[largest]){
+		if(r<length && arr[r]>arr[largest]){
 			largest =r;
 		}
 		
