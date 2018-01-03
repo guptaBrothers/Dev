@@ -187,7 +187,7 @@ public class ArraySorting {
 	}
 	
 	
-	private void maxHeapify(int[] arr,int length int i) {
+	private void maxHeapify(int[] arr,int length, int i) {
 		int l =2*i;
 		int r = 2*i+1;
 		int largest;
