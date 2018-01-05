@@ -133,17 +133,17 @@ public class ArraySorting {
 
 	private void merge(int[] arr, int start, int mid, int end) {
 		int leftSubArraySize,rightSubArraySize,i,j,k;
-		leftSubArraySize =mid-start-1;
+		leftSubArraySize =mid-start+1;
 		rightSubArraySize = end-mid;
 		int [] leftSubArray = new int[leftSubArraySize];
 		for(i=0;i<=leftSubArraySize;i++){
-			leftSubArray[i] =arr[start+i-1];
+			leftSubArray[i] =arr[start+i];
 		}
 		int [] rightSubArray = new int[rightSubArraySize];
 		for(j=0;j<=rightSubArraySize;j++){
-			rightSubArray[j] =arr[mid+j];
+			rightSubArray[j] =arr[mid+1+j];            // mid+1 as passed in the merge func parameter
 		}
-		k=0;
+		k=start;                // Note k should start merging from relative start index
 		i=0;
 		j=0;
 		while(i<=leftSubArraySize && j<=rightSubArraySize){
