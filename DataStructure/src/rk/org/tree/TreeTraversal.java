@@ -162,7 +162,8 @@ public class TreeTraversal {
 		BinaryTreeNode prev = null;
 		while (!s.isEmpty()) {
 			BinaryTreeNode current = s.peek();
-			if (prev == null || prev.getLeft() == current || prev.getRight() == current) {
+			if (prev == null || prev.getLeft() == current || prev.getRight() == current) // top to bottom (prev < current)
+			{
 				if (current.getLeft() != null) {
 					s.push(current.getLeft());
 				} else if (current.getRight() != null) {
@@ -172,7 +173,7 @@ public class TreeTraversal {
 				if (current.getRight() != null) {
 					s.push(current.getRight());
 				}
-			} else {
+			} else {              // bottom to top (current < prev)
 				s.pop();
 				System.out.print(" " + current.getData());
 			}
