@@ -2,6 +2,7 @@ package rk.org.array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author rahul
@@ -133,20 +134,20 @@ public class ArraySorting {
 
 	private void merge(int[] arr, int start, int mid, int end) {
 		int leftSubArraySize,rightSubArraySize,i,j,k;
-		leftSubArraySize =mid-start-1;
+		leftSubArraySize =mid-start+1;
 		rightSubArraySize = end-mid;
 		int [] leftSubArray = new int[leftSubArraySize];
-		for(i=0;i<=leftSubArraySize;i++){
-			leftSubArray[i] =arr[start+i-1];
+		for(i=0;i<leftSubArraySize;i++){
+			leftSubArray[i] =arr[start+i];
 		}
 		int [] rightSubArray = new int[rightSubArraySize];
-		for(j=0;j<=rightSubArraySize;j++){
-			rightSubArray[j] =arr[mid+j];
+		for(j=0;j<rightSubArraySize;j++){
+			rightSubArray[j] =arr[mid+1+j];
 		}
-		k=0;
+		k=start;
 		i=0;
 		j=0;
-		while(i<=leftSubArraySize && j<=rightSubArraySize){
+		while(i<leftSubArraySize && j<rightSubArraySize){
 			if(leftSubArray[i]<=rightSubArray[j]){
 				arr[k++]=leftSubArray[i++];
 			}
@@ -166,11 +167,9 @@ public class ArraySorting {
 	
 	public void heapSort(int arr[]){
 		buildMaxHeap(arr);
-		System.out.println();
-		dispayArray(arr);
 		for(int i=arr.length-1;i>0;i--){
 			swap(arr,0,i);
-			maxHeapify(arr,0);
+			maxHeapify(arr,i,0);
 		}
 		
 	}
@@ -181,33 +180,52 @@ public class ArraySorting {
 	private void buildMaxHeap(int[] arr) {
 		
 		for(int i =(arr.length-1)/2; i>=0;i--){
-			maxHeapify(arr, i);
+			maxHeapify(arr,arr.length, i);
 		}
 		
 	}
 	
 	
-	private void maxHeapify(int[] arr, int i) {
+	private void maxHeapify(int[] arr,int length, int i) {
 		int l =2*i;
 		int r = 2*i+1;
 		int largest;
-		if(l<arr.length && arr[l]>arr[i]){
+		if(l<length && arr[l]>arr[i]){
 			largest =l;
 		}
 		else{
 			largest =i;
 		}
 			
-		if(r<arr.length && arr[r]>arr[largest]){
+		if(r<length && arr[r]>arr[largest]){
 			largest =r;
 		}
 		
 		if(largest != i ){
 			swap(arr, i, largest);
-			maxHeapify(arr, largest);
+			maxHeapify(arr,length, largest);
 		}
 	}
-
+	
+	public void countingSort(int arr[],int start,int end){
+		int range = end-start+1;
+		int output[] =new int[range];
+		for(int i=0;i<range;i++){
+			output[i]=0;
+		}
+		
+		for(int  j=0;j<arr.length;j++){
+			output[arr[j]-start]++;
+		}
+		
+		for(int i=0,j=0;i<range;i++){
+			while(output[i] >0){
+					arr[j++] =i+start;
+					output[i]--;
+			}
+		}
+		this.dispayArray(arr);
+	}
 
 	public static void main(String[] args) {
 		ArraySorting obj = new ArraySorting();
@@ -218,11 +236,15 @@ public class ArraySorting {
 		//obj.selectionSort(arr);
 		//obj.insertionSort(arr);
 		//obj.quickSort(arr, 0, arr.length-1);
-		//obj.mergeSort(arr, 0, arr.length-1);
-		obj.heapSort(arr);
+		obj.mergeSort(arr, 0, arr.length-1);
+		//obj.heapSort(arr);
+		//obj.countingSort(new int []{5,6,7,8,9,4,5,6,3,7,8,9}, 1, 10);
 		System.out.println("Array after  sorting is ");
 		dispayArray(arr);
 
+		//  List<Integer> l = new ArrayList<Integer>();
+		 // l.add(0,2);
+		  //l.add(0,1);
 	}
 
 	private static void dispayArray(int[] arr) {
