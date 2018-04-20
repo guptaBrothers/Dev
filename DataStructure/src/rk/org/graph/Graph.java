@@ -1,19 +1,40 @@
 package rk.org.graph;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Graph {
 	private int vCount;
-	private LinkedList<Integer> adj[];
+	private List adj[];
 	
 	public Graph(int v){
 		this.vCount = v;
+		this.adj = new LinkedList[v];
 		for(int i=0;i<v;i++){
 			this.adj[i] = new LinkedList<Integer>();
 		}
 	}
 	
+	public List[] getAdj() {
+		return adj;
+	}
+
+	public void setAdj(List[] adj) {
+		this.adj = adj;
+	}
+
+	public int getvCount() {
+		return vCount;
+	}
+
+	public void setvCount(int vCount) {
+		this.vCount = vCount;
+	}
+
+
+
 	public void addEdge(int sourceVertex,int destinationVertex){
 		if(sourceVertex <= this.vCount && destinationVertex <= this.vCount && sourceVertex!=-1 && destinationVertex!=-1){
 			// for directed graph
@@ -49,6 +70,9 @@ public class Graph {
 	 void BFS(int s)
 	    {
 	        boolean visited[] = new boolean[vCount];		// Mark all the vertices as not visited(By default set as false)
+	        for(int i=0;i<visited.length;i++){
+	        	visited[i]=false;
+	        }
 	 
 	        // Create a queue for BFS
 	        LinkedList<Integer> queue = new LinkedList<Integer>();
