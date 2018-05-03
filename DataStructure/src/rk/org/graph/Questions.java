@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Questions {
 	
@@ -87,6 +88,49 @@ public class Questions {
 		recStack[source] =false;  // remove the vertex from recursion stack
 		return false;
 	}
+	
+	
+	
+	/**
+	 * Practical applications
+	 * 1. Dependency resolution
+	 * 2. Build sequence in multi-tier application,jenkins
+	 * 3. Scheduling of jobs in sequence
+	 * 4. formula evaluation
+	 * 
+	 * 
+	 * @param g
+	 */
+	public void topologicalSort(Graph g){
+		boolean visited[] = new boolean[g.getvCount()];
+		for(int i=0;i<g.getvCount();i++)
+			visited[i] = false;
+		
+		Stack s = new Stack<Integer>();
+		
+		for(int i=0;i<g.getvCount();i++){
+			if(!visited[i])
+				topologicalSortUtil(g,i,visited,s);
+		}
+		
+		while(!s.isEmpty()){
+			System.out.println(" " + s.pop());
+		}
+	}
+
+	private void topologicalSortUtil(Graph g, int i, boolean[] visited, Stack<Integer> s) {
+		
+		visited[i] = true;
+		Iterator<Integer> itr = g.getAdj()[i].listIterator();
+		while(itr.hasNext()){
+			int edge = itr.next();
+			if(!visited[edge]){
+				topologicalSortUtil(g, edge, visited, s);
+			}
+		}
+		s.push(new Integer(i));
+	}
+
 
 	public static void main(String[] args) {
 		int vertexCount = 5;
@@ -101,7 +145,8 @@ public class Questions {
 		g.setvCount(vertexCount);
 		
 		Questions obj = new Questions();
-		obj.findAllPathsBwTwoNodes(g,0, 4);
+		//obj.findAllPathsBwTwoNodes(g,0, 4);
+		obj.topologicalSort(g);
 
 	}
 
