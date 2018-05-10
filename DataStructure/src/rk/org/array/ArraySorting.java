@@ -166,7 +166,7 @@ public class ArraySorting {
 
 	
 	public void heapSort(int arr[]){
-		buildMaxHeap(arr);
+		buildMaxHeap(arr);             // Complexity O(n)
 		for(int i=arr.length-1;i>0;i--){
 			swap(arr,0,i);
 			maxHeapify(arr,i,0);
