@@ -14,8 +14,8 @@ public class Questions {
 		List<Integer> path = new LinkedList<>();
 		boolean visitedForCycle[] = new boolean[g.getvCount()];
 		boolean recStack[] = new boolean[g.getvCount()];
-		visitedForCycle[source] = true;
-		recStack[source] = true;
+		//visitedForCycle[source] = true;
+		//recStack[source] = true;
 		if(!isCycleInGraph(g,source,visitedForCycle,recStack)){
 			boolean visited[] = new boolean[g.getvCount()];
 			Queue<Integer> q = new LinkedList<>();
@@ -70,7 +70,7 @@ public class Questions {
 		
 		// traverse the graph(BFS*/DFS) and check if the vertex is already visited
 		
-		if(visited[source]==false){
+		if(!visited[source]){
 			// Mark the current node as visited and part of recursion stack
 			visited[source] = true;
 			recStack[source] = true;
