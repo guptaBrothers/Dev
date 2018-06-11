@@ -65,6 +65,10 @@ public class Questions {
 	 * @param recStack 
 	 * @param recStack2 
 	 * @return
+	 * 
+	 * source +----+---
+	 *      	   -  -
+	 *      	   ----
 	 */
 	private boolean isCycleInGraph(Graph g,int source, boolean[] visited, boolean[] recStack){
 		
@@ -84,7 +88,7 @@ public class Questions {
 				else if(recStack[edge])
 					return true;
 			}
-		}
+		} 
 		recStack[source] =false;  // remove the vertex from recursion stack
 		return false;
 	}
@@ -138,8 +142,8 @@ public class Questions {
 		g.addEdge(0, 1);
 		g.addEdge(0, 2);
 		g.addEdge(0, 4);
-		g.addEdge(1, 3);
 		g.addEdge(1, 4);
+		g.addEdge(1, 3);
 		g.addEdge(2, 4);
 		
 		g.setvCount(vertexCount);
