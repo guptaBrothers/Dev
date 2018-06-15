@@ -1,0 +1,5 @@
+ToDO
+1. Search in a row and column wise sorted matrix.(*)-start from top right corner
+2. Find a row and column that has all elements as 0s or 1s (any one pattern)
+3. Generate an in-place matrix ,if a cell has 1s then corresponding row and column should be 1s.
+4. Find the shortest path , when maze is in matrix representation.
