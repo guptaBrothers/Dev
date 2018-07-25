@@ -59,6 +59,9 @@ public class LinkedListADT  {
 	}
 	
 
+	/**
+	 * @param args
+	 */
 	public static void main (String[] args){
 		
 		LinkedListADT linkedList = new LinkedListADT();
@@ -77,11 +80,13 @@ public class LinkedListADT  {
 //		if(linkedList.isLoopInLinkledList(current)){
 //			System.out.println("\n There is a loop in the list " + " & loopNode data is + " + linkedList.getLoopNode(current).getData());
 //		}else{
-//			linkedList.displayList(current);
+//			linkedList.displayList(currelinkedList.displayList(current)nt);
 //		}
 //		current =linkedList.head;
-		linkedList.rotateByKNode(current, 3);
-		
+//		linkedList.rotateByKNode(current, 3);
+		ListNode newHead =linkedList.reverseLinkedListWithoutTempVariable(current);
+		current.setNext(null);
+		linkedList.displayList(newHead);
 	}
 	
 	public ListNode getLoopNode(ListNode head){
@@ -127,7 +132,7 @@ public class LinkedListADT  {
 		ListNode current = head;
 		if(head!= null && head.getNext()!= null ){
 			while(current.getNext() != null){
-				current =current.getNext();
+				current = current.getNext();
 			}
 			current.setNext(head);
 		}else{
@@ -150,6 +155,43 @@ public class LinkedListADT  {
 		}
 		current.setNext(prev);
 		return current;
+	}
+	
+	public ListNode reverseLinkedListWithoutTempVariable(ListNode curr){
+		ListNode newHead = null;
+		if(curr == null || curr.getNext() == null){
+			newHead = curr;
+			return curr;
+		}
+		if(curr.getNext().getNext()== null){        // end detection
+			newHead = curr.getNext();
+			curr.getNext().setNext(curr);           // change pointer ** vip
+			curr.setNext(null);
+		}else{
+			newHead = reverseLinkedListWithoutTempVariable(curr.getNext());
+			curr.getNext().setNext(curr);
+		}
+		return newHead;
+	}
+	
+	public ListNode reverseByKNodes(ListNode head,int k){
+
+		if(head ==null)
+			return head;
+		ListNode curr = head;
+		ListNode prev = null;
+		ListNode next = null;
+		int count =k;
+		while(curr.getNext()!=null && (count--)>0){
+			next =curr.getNext();
+			curr.setNext(prev);
+			prev =curr;
+			curr = next;
+		}
+		if(next != null )
+			head.setNext(reverseByKNodes(next,k));
+
+		return prev;
 	}
 
 	public ListNode createLoopInLinkedList(ListNode head) {
