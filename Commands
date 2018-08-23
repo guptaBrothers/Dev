@@ -1,0 +1,58 @@
+// Git hard clean
+
+git reset --hard FETCH_HEAD
+
+// delete untracked files
+git clean -df   
+
+/delete commits not pushed to remote
+git reset --hard origin/<branch_name>
+
+
+
+
+//=============CMD===============
+Kill task in windows from cmd
+>tasklist
+
+>taskkill /PID <processId> /f    // forced kill
+or
+>taskkill /IM <processName> /f
+
+
+Install nvm (Node Version Manager) - to switch between node versions as per compatibility
+command
+nvm ls -> current node version used
+nvm use 8.11  -> use specified node version (but that version should be installed)
+
+
+
+
+VisualStudio Cheat
+
+customise using settings.json file
+
+To open open file in new table go to settings.json (a vs code settings file)
+"workbench.editor.enablePreview": false
+
+Ctrl + K/enter 		: to keep tab open
+"workbench.editor.enablePreview": false settings.json (a vs code settings file)
+
+In latest version of VScode
+navigation Ctrl+clik doesn't work -settings.json 
+users settings
+remove "editor.multiCursorModifier": "ctrlCmd"
+
+
+
+Gradle commands
+>gradle clean
+>gradle cleaneclipse
+>gradle eclipse
+>gradle build -x test 
+
+
+
+Npm
+>npm install npm@latest -g
+>
