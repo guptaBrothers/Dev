@@ -60,3 +60,5 @@ This is because, two unequal string objects according to equals() method may hav
 Conclusion :
 When you want to check the equality of two string objects on their physical existence in the memory, then use “==” operator. If you want to check the equality of two string objects depending upon their contents, then use equals() method. It is recommended not to use hashCode() method to check the equality of two string objects. You may get unexpected result.
 
+
+https://dzone.com/articles/working-with-hashcode-and-equals-in-java
