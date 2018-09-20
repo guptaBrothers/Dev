@@ -3,6 +3,7 @@ package rk.org.concepts;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -58,27 +59,24 @@ public class LRUCache {
 			if (dq.getFirst().getData() != data) {
 				DLListNode existingNode = map.get(data);
 				DLListNode first = dq.peekFirst();
-				DLListNode temp = first.getNext();
+				DLListNode temp = existingNode.getPrev();
 
-				if (existingNode.getNext() == null) {
-					first.setNext(null);
-				} else {
-					existingNode.getNext().setPrev(first); // note prev next  combination
-					first.setNext(existingNode.getNext());
-					
-				}
-				first.setPrev(existingNode.getPrev());
-				existingNode.getPrev().setNext(first);
-
+				temp.setNext(temp.getNext().getNext());
+				temp.getNext().setPrev(temp);
+				existingNode.setNext(first); // note prev next  combination
 				existingNode.setPrev(null);
-				existingNode.setNext(temp);
-				temp.setPrev(existingNode);
+				first.setPrev(existingNode);
+				dq.remove(existingNode.getData());
+				DLListNode newNode = new DLListNode();
+				newNode.setData(existingNode.getData());
+				newNode.setPrev(null);
+				newNode.setNext(dq.getFirst());
+				dq.addFirst(newNode);
 
 				map.put(first.getData(), first);
-				map.put(existingNode.getData(), existingNode);
+				map.put(existingNode.getData(), newNode);
 				map.put(temp.getData(), temp);
-				map.put(existingNode.getNext().getData(), existingNode.getNext());
-				map.put(existingNode.getPrev().getData(), existingNode.getPrev());
+				map.put(temp.getNext().getData(), temp.getNext());
 				
 			}
 

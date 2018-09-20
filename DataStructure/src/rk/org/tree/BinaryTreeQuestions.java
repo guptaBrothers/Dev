@@ -2,6 +2,7 @@ package rk.org.tree;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class BinaryTreeQuestions {
 	
@@ -47,12 +48,66 @@ public class BinaryTreeQuestions {
 				q.offer(current.getRight());
 		}
 	}
+	
+	private static void displayTopView(BinaryTreeNode root){
+		
+		printLeftSide(root);
+		//printLowerBoundry(root);   // no child node in level order
+		printRightBoundry(root);
+	}
+
+	private static void printRightBoundry(BinaryTreeNode root) {
+		boolean isDone = false;
+		BinaryTreeNode current = root;
+		BinaryTreeNode prev = null;
+		while(!isDone){
+			if(current != null ){
+				System.out.println(current.getData());
+				prev = current;
+				current = current.getRight();
+			}
+			else if(prev != null){
+					if(prev.getLeft() != null)
+						current = prev.getLeft();
+						prev = null;
+				}
+				else
+					isDone = true;
+			}
+		
+	}
+
+	private static void printLowerBoundry(BinaryTreeNode root) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void printLeftSide(BinaryTreeNode root) {
+		boolean isDone = false;
+		BinaryTreeNode current = root;
+		BinaryTreeNode prev = null;
+		while(!isDone){
+			if(current != null ){
+				System.out.println(current.getData());
+				prev = current;
+				current = current.getLeft();
+			}
+			else if(prev != null){
+					if(prev.getRight() != null)
+						current = prev.getRight();
+						prev = null;
+				}
+				else
+					isDone = true;
+			}
+	}
 
 	public static void main(String args[]){
-		int arr[] = {2,5,3,7,6,9,11,10,1,4,8};
+		int arr[] = {2,5,3,7,6,9,11,10,1,4,8,5,1};
 		BinaryTreeNode root = createBinaryTree(arr);
 		displayBTLevelWise(root);
-		
+		System.out.println();
+		displayTopView(root);
 	}
 
 }

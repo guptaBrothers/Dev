@@ -1,0 +1,16 @@
+Standard Problems
+1. Rain Water Tapping -Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+
+
+
+Design Standard problems
+1. LRU Cache implementation
+2. Conference room booking system
+3. Website - Uber,MakeMyTrip,BookMyShow,WhatsApp classes , TinyUrl , Parking lot
+
+
+
+
+Technology Usage
+1. Mem cache redis - working and advantage
+2. 
