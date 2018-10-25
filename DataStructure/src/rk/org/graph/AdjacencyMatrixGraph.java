@@ -22,20 +22,20 @@ public class AdjacencyMatrixGraph {
 		this.adjMat =new boolean[vertexCount][vertexCount];
 	}
 	
-	public void addEdge(int i,int j){
-		if(i<vertexCount && j<vertexCount && i>-1 && j>-1){
-			adjMat[i][j]=true;
+	public void addEdge(int source,int destination){
+		if(source<vertexCount && destination<vertexCount && source>-1 && destination>-1){
+			adjMat[source][destination]=true;
 		}
 	}
 	
-	public void removeEdge(int i,int j){
-		if(i<vertexCount && j<vertexCount && i>-1&& j>-1){
-			adjMat[i][j]=false;
+	public void removeEdge(int source,int destination){
+		if(source<vertexCount && destination<vertexCount && source>-1&& destination>-1){
+			adjMat[source][destination]=false;
 		}
 	}
 	
-	public boolean isAnEdge(int i, int j){
-		if(i<vertexCount && j<vertexCount && i>-1 && j>-1 && adjMat[i][j]){
+	public boolean isAnEdge(int source, int destination){
+		if(source<vertexCount && destination<vertexCount && source>-1 && destination>-1 && adjMat[source][destination]){
 			return true;
 		}
 		return false;
