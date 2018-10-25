@@ -38,6 +38,12 @@ public class LinkedListADT  {
 			current.setNext(newNode);
 		}
 	}
+	
+	public void insertAtBegenning(int data){
+		ListNode newNode = new ListNode(data);
+		newNode.setNext(this.head);
+		this.head = newNode;
+	}
 
 	public int getLength() {
 		ListNode current = head;

@@ -20,8 +20,8 @@ public class AdjacencyListGraph {
 		int i =vertices.indexOf(source);
 		int j =vertices.indexOf(destination);
 		if(i!=-1 && j!=-1){
-			edges[i].addNode(destination);
-			edges[j].addNode(source);
+			edges[i].insertAtBegenning(destination);
+			edges[j].insertAtBegenning(source);
 		}
 	}
 	
