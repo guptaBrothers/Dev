@@ -7,7 +7,7 @@ package rk.org.graph;
  * 2. Remove an edge 
  * 3. check is edge exists between two  vertexes.
  * 
- * Note this is an Undirected graph
+ * Note this is an Directed graph
  * 
  * 
  * @author rahul
