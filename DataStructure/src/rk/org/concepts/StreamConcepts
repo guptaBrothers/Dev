@@ -1,0 +1,10 @@
+
+// traverse a array via stream having access of index 
+IntStream.range(0,spanArray.length-1)
+				 .forEach(i -> System.out.println("Span of "+ dailyStocks[i] +" is "+ spanArray[i]));
+				 
+List<String> evenIndexedNames = IntStream
+      .range(0, names.length)
+      .filter(i -> i % 2 == 0)
+      .mapToObj(i -> names[i])
+      .collect(Collectors.toList());				 

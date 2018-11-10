@@ -1,0 +1,28 @@
+public void remove() {
+            if (lastRet < 0)
+                throw new IllegalStateException();
+            checkForComodification();
+
+            try {
+                ArrayList.this.remove(lastRet);
+                cursor = lastRet;
+                lastRet = -1;
+                expectedModCount = modCount;
+            } catch (IndexOutOfBoundsException ex) {
+                throw new ConcurrentModificationException();
+            }
+        }
+ 
+ 1. If the list is modified structurally at any time after the iterator is created ,
+ 	 in any way except through th iterator's own remove() method,
+ 	 the iterator will throw concurrentModificationException.
+ 	 
+ 2. Also, note while modifying list via iterator.remove() method , it checks if at least
+ 	 one element is iterated by the iterator.
+ 	 Since iterator doesn't point directly to elements , at initial case the iterator 
+ 	 pointer is to the address just before to the first element.
+ 	 [   A , B ,C , ...]
+ 	   ^
+ 	   |                     Pointer travels between elements , deletes last traversed element.
+ 	   iterator pointer when created. Hence at least once call next() before calling 
+ 	   remove method else IllegalStateException  (lastRet < 0)  	 
