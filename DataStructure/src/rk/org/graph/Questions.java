@@ -1,9 +1,14 @@
 package rk.org.graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -122,6 +127,18 @@ public class Questions {
 		}
 	}
 
+	/**
+	 * Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices 
+	 * such that for every directed edge uv, vertex u comes before v in the ordering.
+	 * Topological Sorting for a graph is not possible if the graph is not a DAG.
+	 * 
+	 * 
+	 * 
+	 * @param g
+	 * @param i
+	 * @param visited
+	 * @param s
+	 */
 	private void topologicalSortUtil(Graph g, int i, boolean[] visited, Stack<Integer> s) {
 		
 		visited[i] = true;
@@ -133,6 +150,133 @@ public class Questions {
 			}
 		}
 		s.push(new Integer(i));
+	}
+	
+	
+	
+	/**
+	 * Find distance of each node from source in unweighted graph(i.e each edge of 
+	 * weight 1 unit) 
+	 * 
+	 * Perform BFS
+	 * Maintain a queue that tracks bfs order
+	 * At each node get the adjacency list , for each check if not visited
+	 * update its distance as distance of current source/node plus one
+	 * 
+	 * As the traversal is lavel of bredth wise hence minimum distance for each node 
+	 * from source is found for unweighted graph
+	 * 
+	 * @param g
+	 * @param source
+	 */
+	private void findDistanceOfEachNodeFromSource(Graph g , int source){
+		Queue<Integer> q = new LinkedList<>();
+		int path[] = new int[g.getvCount()];
+		int distance[] = new int[g.getvCount()];
+		for(int i = 0 ; i< distance.length ;i++)
+			distance[i] = -1;
+		path[source] = source;
+		distance[source] = 0;
+		q.offer(source);
+		
+		while(!q.isEmpty()){
+			int s = q.poll();
+			List<Integer> adj = g.getAdj()[s];
+			adj.stream()
+			   .forEach(e ->{
+				   if(distance[e] == -1){
+					   distance[e] = distance[s] +1;
+					   path[e] = s;
+					   q.offer(e);
+					  }
+			   	});
+		}
+		
+		Arrays.stream(distance).forEach(System.out :: println);
+	}
+	
+	
+	/**
+	 * Find sorted path from source to each node for weighted graph
+	 * 
+	 * @param g
+	 * @param source
+	 */
+	private void dijkstraAlgo(WeightedGraph g , int source ){
+		PriorityQueue<WeightedGraphNode> pQ = new PriorityQueue<>();
+		WeightedGraphNode sourceNode = new WeightedGraphNode(source , g.getWeightMap().get(source));
+		pQ.offer(sourceNode);
+		int path[] = new int[g.getvCount()];
+		int distance[] = new int[g.getvCount()];
+		for(int i = 0 ; i< distance.length ;i++)
+			distance[i] = -1;
+		path[source] = source;
+		distance[source] = 0;
+		
+		while(!pQ.isEmpty()){
+			WeightedGraphNode tempSource = pQ.poll();
+			List<WeightedGraphNode> adjNode = g.getAdj()[source]; 
+			adjNode.stream()
+				   .forEach(node -> {
+					   int currVertex = node.getVertex();
+					   int tempVertex = tempSource.getVertex();
+					   int newDistance = distance[tempVertex] + node.getEdgeWeight();
+					   if(distance[currVertex] == -1){
+						   distance[currVertex] = newDistance;
+						   pQ.offer(node);
+						   path[currVertex] = tempVertex;
+					   }
+					   else if(distance[currVertex] >  newDistance){
+						   distance[currVertex] = newDistance;
+						   Iterator<WeightedGraphNode> itr = pQ.iterator();
+						   while(itr.hasNext()){
+							   WeightedGraphNode dummyNode = itr.next();
+							   if(dummyNode.getVertex() == currVertex){
+								   dummyNode.setEdgeWeight(newDistance);
+							   }
+						   }
+						   path[currVertex] = tempVertex;
+						   
+					   }
+					   
+					});
+		}
+		
+		Arrays.stream(distance).forEach(System.out :: println);
+		
+		
+	}
+	
+	private class WeightGraphNode implements Comparator{
+		public Integer vertex ;
+		public Integer edgeWeight ;
+		
+		@Override
+		public int compare(Object obj1, Object obj2) {
+			if (obj1 instanceof WeightGraphNode && obj2 instanceof WeightGraphNode) {
+				return ((WeightGraphNode)obj1).edgeWeight.compareTo(((WeightGraphNode)obj2).edgeWeight);
+			}
+			else{
+				System.out.println(" Invalid type");
+				return 0;
+			}
+		}
+
+		public int getVertex() {
+			return vertex;
+		}
+
+		public void setVertex(int vertex) {
+			this.vertex = vertex;
+		}
+
+		public int getEdgeWeight() {
+			return edgeWeight;
+		}
+
+		public void setEdgeWeight(int edgeWeight) {
+			this.edgeWeight = edgeWeight;
+		}
 	}
 
 
@@ -150,7 +294,17 @@ public class Questions {
 		
 		Questions obj = new Questions();
 		//obj.findAllPathsBwTwoNodes(g,0, 4);
-		obj.topologicalSort(g);
+		//obj.topologicalSort(g);
+		//obj.findDistanceOfEachNodeFromSource(g, 1);
+		Map<Integer,Integer> weightMap = new HashMap<>();
+		weightMap.put(0, 0);
+		weightMap.put(1, 1);
+		weightMap.put(2, 2);
+		weightMap.put(3, 3);
+		weightMap.put(4, 8);
+		
+		WeightedGraph wGraph = new WeightedGraph(vertexCount, weightMap);
+		obj.dijkstraAlgo(wGraph, 0);
 
 	}
 

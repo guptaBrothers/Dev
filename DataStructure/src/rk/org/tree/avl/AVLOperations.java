@@ -4,6 +4,7 @@ import rk.org.tree.BinaryTreeNode;
 import rk.org.tree.BinaryTreeQuestions;
 
 public class AVLOperations {
+	private AVLTreeBalancing avlTreeBalancing;
 	
 	public AVLTreeNode insertInAVLTree(AVLTreeNode root,int data){
 		if(root == null){
@@ -12,22 +13,22 @@ public class AVLOperations {
 			root = newNode;
 		}
 		else if(data < root.getData()){
-				root.setLeft(insertInAVLTree(root.getLeft,data));
-				if(Math.abs(root.getLeft().height - root.getRight().height) > 1){
-					if(data < root.getLeft().data)
-						SingleRotateLeft(root.getLeft());
+				root.setLeft(insertInAVLTree(root.getLeft(),data));
+				if(Math.abs(root.getLeft().getHeight() - root.getRight().getHeight()) > 1){
+					if(data < root.getLeft().getData())
+						avlTreeBalancing.SingleRotationLeft(root.getLeft());
 					else
-						DoubleRotateLeft(root.getLeft());
+						avlTreeBalancing.DoubleRotationLeft(root.getLeft());
 				
 				}
 			}
 			else {
 				root.setRight(insertInAVLTree(root.getRight(),data));
-				if(Math.abs(root.getLeft().height -root.getRight().height) > 1)
-					if(data > root.getright().data)
-						SingleRotateRight(root.getRight());
+				if(Math.abs(root.getLeft().getHeight() -root.getRight().getHeight()) > 1)
+					if(data > root.getRight().getData())
+						avlTreeBalancing.SingleRotationRight(root.getRight());
 					else
-						DoubleRotateRight(root.getRight());
+						avlTreeBalancing.DoubleRotationRight(root.getRight());
 			}
 		return root;
 	}

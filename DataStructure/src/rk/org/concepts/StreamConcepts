@@ -7,4 +7,32 @@ List<String> evenIndexedNames = IntStream
       .range(0, names.length)
       .filter(i -> i % 2 == 0)
       .mapToObj(i -> names[i])
-      .collect(Collectors.toList());				 
+      .collect(Collectors.toList());
+      
+      
+Collection sorting
+
+Sort custom objects in reverse natural order
+
+@Override
+		public int compare(Object obj1, Object obj2) {
+			if (obj1 instanceof WeightedGraphNode && obj2 instanceof WeightedGraphNode) {
+				return ((WeightedGraphNode)obj2).edgeWeight.compareTo(((WeightedGraphNode)obj1).edgeWeight);
+			}
+			else{
+				System.out.println(" Invalid type");
+				return 0;
+			}
+		}
+		
+		      				 
+		      				 
+ArrayList<StudentInformation> infos = new ArrayList<StudentInformation>();
+// fill array
+Collections.sort(infos, 
+    Comparator.comparingInt(StudentInformation::getBirthYear).reversed());
+    
+ArrayList<StudentInformation> infos = new ArrayList<StudentInformation>();
+// fill array
+Collections.sort(infos, (s1, s2) ->
+    Integer.compare(s2.getBirthYear(), s1.getBirthYear()));    
