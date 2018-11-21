@@ -197,14 +197,32 @@ public class Questions {
 	
 	
 	/**
+	 * Dijkstra Algorithm
+	 * 1. Single source algorithm
+	 * 2. Only +ve edge weighted graph gives correct answer.
+	 * 3. Follows greedy approach , hence once a node is visited , it is dequeued from PQ.
+	 * 4. Complexity O(V^2)
+	 * 
 	 * Find sorted path from source to each node for weighted graph
+	 * Traverse adjacency list of source , and add each node into the Priority Queue(based on weight)
+	 * While adding updated the distance of individual node from source
+	 * If the node is already visited , then check for new distance ,if yes 
+	 *  check if the node is present in the queue ,if yes remove it and 
+	 *  update it & add node to queue with updated distance.
 	 * 
 	 * @param g
 	 * @param source
 	 */
 	private void dijkstraAlgo(WeightedGraph g , int source ){
-		PriorityQueue<WeightedGraphNode> pQ = new PriorityQueue<>();
-		WeightedGraphNode sourceNode = new WeightedGraphNode(source , g.getWeightMap().get(source));
+		PriorityQueue<WeightedGraphNode> pQ = new PriorityQueue<>(new Comparator<WeightedGraphNode>(){
+
+			@Override
+			public int compare(WeightedGraphNode obj1, WeightedGraphNode obj2) {
+					return ((WeightedGraphNode)obj1).edgeWeight.compareTo(((WeightedGraphNode)obj2).edgeWeight);
+			}
+		});
+		
+		WeightedGraphNode sourceNode = new WeightedGraphNode(source , 0);
 		pQ.offer(sourceNode);
 		int path[] = new int[g.getvCount()];
 		int distance[] = new int[g.getvCount()];
@@ -215,7 +233,7 @@ public class Questions {
 		
 		while(!pQ.isEmpty()){
 			WeightedGraphNode tempSource = pQ.poll();
-			List<WeightedGraphNode> adjNode = g.getAdj()[source]; 
+			List<WeightedGraphNode> adjNode = g.getAdj()[tempSource.getVertex()]; 
 			adjNode.stream()
 				   .forEach(node -> {
 					   int currVertex = node.getVertex();
@@ -228,55 +246,65 @@ public class Questions {
 					   }
 					   else if(distance[currVertex] >  newDistance){
 						   distance[currVertex] = newDistance;
+						   WeightedGraphNode newNode = new WeightedGraphNode();
 						   Iterator<WeightedGraphNode> itr = pQ.iterator();
 						   while(itr.hasNext()){
 							   WeightedGraphNode dummyNode = itr.next();
 							   if(dummyNode.getVertex() == currVertex){
-								   dummyNode.setEdgeWeight(newDistance);
+								   itr.remove();
+								   newNode.setVertex(currVertex);
+								   newNode.setEdgeWeight(newDistance);
+								   break;
 							   }
 						   }
+						  // pQ.offer(newNode);   this to handle negative edges
 						   path[currVertex] = tempVertex;
-						   
 					   }
-					   
 					});
 		}
 		
 		Arrays.stream(distance).forEach(System.out :: println);
-		
-		
 	}
 	
-	private class WeightGraphNode implements Comparator{
-		public Integer vertex ;
-		public Integer edgeWeight ;
+	
+	
+	/**
+	 * Bellman Ford algorithm - to find shortest path from source to each node of graph having negative edges
+	 * 1. Single source
+	 * 2. Having -ve edges
+	 * 3. O(V^2) 
+	 * 
+	 * 
+	 * @param wGraph
+	 * @param source
+	 */
+	public void shortestDistanceBellmanFordAlgo(WeightedGraph wGraph , int source ){
+		int distance[] = new int[wGraph.getvCount()];
+		int path[] = new int[wGraph.getvCount()];
+		for(int i =0 ; i<distance.length ; i++)
+			distance[i] = Integer.MAX_VALUE;
+		path[source] = source;
+		distance[source] = 0;
+		Queue<Integer> q = new LinkedList<>();
+		q.offer(source);
 		
-		@Override
-		public int compare(Object obj1, Object obj2) {
-			if (obj1 instanceof WeightGraphNode && obj2 instanceof WeightGraphNode) {
-				return ((WeightGraphNode)obj1).edgeWeight.compareTo(((WeightGraphNode)obj2).edgeWeight);
-			}
-			else{
-				System.out.println(" Invalid type");
-				return 0;
-			}
+		while(!q.isEmpty()){
+			int currentSource = q.poll();
+			
+			List<WeightedGraphNode> adjNode = wGraph.getAdj()[currentSource];
+			adjNode.stream()
+				   .forEach(node ->{
+					   int newDistance = distance[currentSource] + node.getEdgeWeight();
+					   if(distance[node.getVertex()] > newDistance){
+						   distance[node.getVertex()] = newDistance;
+						   q.offer(node.getVertex());
+						   path[node.getVertex()] = currentSource;
+					   }
+					   
+				   });
 		}
-
-		public int getVertex() {
-			return vertex;
-		}
-
-		public void setVertex(int vertex) {
-			this.vertex = vertex;
-		}
-
-		public int getEdgeWeight() {
-			return edgeWeight;
-		}
-
-		public void setEdgeWeight(int edgeWeight) {
-			this.edgeWeight = edgeWeight;
-		}
+		
+		Arrays.stream(distance).forEach(System.out :: println);
 	}
 
 
@@ -296,16 +324,19 @@ public class Questions {
 		//obj.findAllPathsBwTwoNodes(g,0, 4);
 		//obj.topologicalSort(g);
 		//obj.findDistanceOfEachNodeFromSource(g, 1);
-		Map<Integer,Integer> weightMap = new HashMap<>();
-		weightMap.put(0, 0);
-		weightMap.put(1, 1);
-		weightMap.put(2, 2);
-		weightMap.put(3, 3);
-		weightMap.put(4, 8);
 		
-		WeightedGraph wGraph = new WeightedGraph(vertexCount, weightMap);
-		obj.dijkstraAlgo(wGraph, 0);
-
+		
+		WeightedGraph wGraph = new WeightedGraph(vertexCount);
+		wGraph.addEdge(0, new WeightedGraphNode(1, 1));
+		wGraph.addEdge(0, new WeightedGraphNode(2, 2));
+		wGraph.addEdge(0, new WeightedGraphNode(3, 4));
+		wGraph.addEdge(1, new WeightedGraphNode(3, 2));
+		wGraph.addEdge(1, new WeightedGraphNode(4, 3));
+		wGraph.addEdge(2, new WeightedGraphNode(4, -1));
+		wGraph.addEdge(4, new WeightedGraphNode(3, -1));
+		wGraph.addEdge(3, new WeightedGraphNode(5, 4));
+		//obj.dijkstraAlgo(wGraph, 0);
+		obj.shortestDistanceBellmanFordAlgo(wGraph, 0);
 	}
 
 }
