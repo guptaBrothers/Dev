@@ -2,7 +2,7 @@ package rk.org.graph;
 
 import java.util.Comparator;
 
-public class WeightedGraphNode implements Comparator{
+public class WeightedGraphNode {
 		public Integer vertex ;
 		public Integer edgeWeight ;
 		
@@ -11,17 +11,6 @@ public class WeightedGraphNode implements Comparator{
 		public WeightedGraphNode(int vertex , int weight){
 			this.vertex = vertex;
 			this.edgeWeight = weight;
-		}
-		
-		@Override
-		public int compare(Object obj1, Object obj2) {
-			if (obj1 instanceof WeightedGraphNode && obj2 instanceof WeightedGraphNode) {
-				return ((WeightedGraphNode)obj2).edgeWeight.compareTo(((WeightedGraphNode)obj1).edgeWeight);
-			}
-			else{
-				System.out.println(" Invalid type");
-				return 0;
-			}
 		}
 		
 		@Override

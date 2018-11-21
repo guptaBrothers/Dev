@@ -7,16 +7,14 @@ import java.util.Map;
 
 public class WeightedGraph {
 	private int vCount;
-	private List adj[];
-	private Map<Integer ,Integer> weightMap ;
+	private List<WeightedGraphNode> adj[];
 	
-	public WeightedGraph(int v , Map<Integer ,Integer> weightMap){
+	public WeightedGraph(int v){
 		this.vCount = v;
 		this.adj = new LinkedList[v];
 		for(int i=0;i<v;i++){
 			this.adj[i] = new LinkedList<WeightedGraphNode>();
 		}
-		this.weightMap = new HashMap<>(weightMap);
 	}
 	
 	public int getvCount() {
@@ -34,14 +32,11 @@ public class WeightedGraph {
 	public void setAdj(List[] adj) {
 		this.adj = adj;
 	}
-
-	public Map<Integer, Integer> getWeightMap() {
-		return weightMap;
-	}
-
-
-	public void setWeightMap(Map<Integer, Integer> weightMap) {
-		this.weightMap = weightMap;
+	
+	public void addEdge(int source , WeightedGraphNode destination){
+		if(source > -1 && source < this.getvCount() && destination.getVertex() > -1 && destination.getVertex() < this.vCount){
+			this.getAdj()[source].add(destination);
+		}
 	}
 
 }
