@@ -201,7 +201,8 @@ public class Questions {
 	 * 1. Single source algorithm
 	 * 2. Only +ve edge weighted graph gives correct answer.
 	 * 3. Follows greedy approach , hence once a node is visited , it is dequeued from PQ.
-	 * 4. Complexity O(V^2)
+	 * 4. Complexity O((|E| + |V|)log|V|)
+	 * 5. A Fibonacci heap priority queue gives O(|V|log|V| + |E|) 
 	 * 
 	 * Find sorted path from source to each node for weighted graph
 	 * Traverse adjacency list of source , and add each node into the Priority Queue(based on weight)
@@ -272,7 +273,7 @@ public class Questions {
 	 * Bellman Ford algorithm - to find shortest path from source to each node of graph having negative edges
 	 * 1. Single source
 	 * 2. Having -ve edges
-	 * 3. O(V^2) 
+	 * 3. O(|E||V|) 
 	 * 
 	 * 
 	 * @param wGraph
