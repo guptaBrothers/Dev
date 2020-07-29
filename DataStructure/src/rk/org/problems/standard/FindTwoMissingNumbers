@@ -34,6 +34,56 @@ Ex: Elements in arr[] with bit set: {3, 6}
 Elements from 1 to n with bit set {2, 3, 6}
 Result of XOR'ing all these is x = 2.
 
+ static void findTwoMissingNumbers(int arr[], int n) 
+    { 
+        /* Get the XOR of all elements in arr[] and 
+           {1, 2 .. n} */
+        int XOR = arr[0]; 
+        for (int i = 1; i < n-2; i++) 
+            XOR ^= arr[i]; 
+        for (int i = 1; i <= n; i++) 
+            XOR ^= i; 
+       
+        // Now XOR has XOR of two missing elements. 
+        // Any set bit in it must be set in one missing 
+        // and unset in other missing number 
+       
+        // Get a set bit of XOR (We get the rightmost 
+        // set bit) 
+        int set_bit_no = XOR & ~(XOR-1); 
+       
+        // Now divide elements in two sets by comparing 
+        // rightmost set bit of XOR with bit at same  
+        // position in each element. 
+        int x = 0, y = 0; // Initialize missing numbers 
+        for (int i = 0; i < n-2; i++) 
+        { 
+            if ((arr[i] & set_bit_no) > 0) 
+                  
+                /*XOR of first set in arr[] */
+                x = x ^ arr[i];  
+            else
+                /*XOR of second set in arr[] */
+                y = y ^ arr[i];  
+        } 
+          
+        for (int i = 1; i <= n; i++) 
+        { 
+            if ((i & set_bit_no)>0) 
+              
+                /* XOR of first set in arr[] and 
+                   {1, 2, ...n }*/
+                x = x ^ i;  
+            else
+                /* XOR of second set in arr[] and 
+                    {1, 2, ...n } */
+                y = y ^ i;  
+        } 
+       
+        System.out.println("Two Missing Numbers are "); 
+        System.out.println( x + " " + y); 
+    } 
+
 Similarly, if we XOR all the elements of arr[] and 1 to n that have rightmost bit not set, we will get the other element, say y.
 Ex: Elements in arr[] with bit not set: {1, 5}
 Elements from 1 to n with bit not set {1, 4, 5}
