@@ -18,4 +18,11 @@ Questions:
     > calculate m^N
     > find rightmost set bit (problem 1)
     
-3. 
+3. Find max consecutive set bits
+    > Naive - save binary form and iterate to find max length of consecutive 1's
+    > Shift + AND - x = (x & (x << 1)) till x is zero. Number of operations = required.
+4. Non repeating number from repeating numbers
+    > Use XOR operation - XOR of all elements in list will return non-repeating number.
+    
+
+https://www.geeksforgeeks.org/bits-manipulation-important-tactics/?ref=leftbar-rightbar
