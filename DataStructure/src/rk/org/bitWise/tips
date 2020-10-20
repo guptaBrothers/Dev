@@ -17,11 +17,13 @@ Questions:
 2. Find rightmost different bit.
     > calculate m^N
     > find rightmost set bit (problem 1)
+3. Check kth bit set or not
+    > Left Shift 1 by k times and do AND - if result ==0  then set 
     
-3. Find max consecutive set bits
+4. Find max consecutive set bits
     > Naive - save binary form and iterate to find max length of consecutive 1's
     > Shift + AND - x = (x & (x << 1)) till x is zero. Number of operations = required.
-4. Non repeating number from repeating numbers
+5. Non repeating number from repeating numbers
     > Use XOR operation - XOR of all elements in list will return non-repeating number.
     
 
